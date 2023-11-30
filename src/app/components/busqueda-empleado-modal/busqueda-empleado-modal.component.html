@@ -1,0 +1,34 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">B&uacute;squeda empleado</h1>
+          <button (click)="onClosing(formEmpleado)" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #formEmpleado="ngForm" ngNativeValidate>
+            <label for="idTextoBusqueda" class="form-label">Nombre a buscar: </label>
+            <input minlength="3" type="text" #nombre="ngModel" name="nombre" id="idTextoBusqueda" 
+                  [(ngModel)]="nombreABuscar" class="form-control" required>
+            <div class="error" *ngIf="((nombre.dirty || nombre.touched) && nombre.invalid)">
+              El nombre es requerido.
+            </div>
+            <button type="button" class="btn btn-primary" [disabled]="!formEmpleado.valid || nombre.value?.trim().length==0" 
+                    (click)="searchEmpleado()">Buscar</button>
+            <div class="row mt-2" *ngIf="empleados">
+              <div *ngFor="let emp of empleados.Data?.Empleado">
+                  {{emp.nombre}} - {{emp.apellido}}
+                  <input type="button" class="btn btn-primary btn-sm" (click)="selectEmpleado(emp);" 
+                         value="Seleccionar"/>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button (click)="onClosing(formEmpleado)" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+  </div>
+</div>
+
+  

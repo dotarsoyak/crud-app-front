@@ -1,0 +1,29 @@
+<h1>Empleado alta</h1>
+
+<form #form="ngForm" (ngSubmit)="submit(form.value);" ngNativeValidate>
+    <div class="col-5 mb-3">
+        <label for="nombre" class="form-label" >Nombre</label>
+        <input type="text" class="form-control" id="nombre" #nombre="ngModel" [(ngModel)]="empleado.nombre" 
+               name="nombre" minlength="3" required />
+        <div class="error" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+          Capture el nombre.
+        </div>
+    </div>
+    <div class="col-5 mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" #apellido="ngModel" [(ngModel)]="empleado.apellido" name="apellido" maxlength="50" required class="form-control" />
+        <div class="error" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+            Capture el apellido.
+        </div>
+      </div>
+    <div class="col-5 mb-3">
+        <label for="puesto" class="form-label">Puesto</label>
+        <input type="text" #puesto="ngModel" [(ngModel)]="empleado.puesto" name="puesto" class="form-control" required />
+        <div class="error" *ngIf="puesto.invalid && (puesto.dirty || puesto.touched)">
+            Capture el puesto.
+        </div>
+      </div>
+    <div class="col-5 mb-3">
+        <input type="submit" class="btn btn-primary" value="Guardar" [disabled]="form.invalid">
+    </div>
+</form>

@@ -1,0 +1,82 @@
+<h1>Crear Poliza faltante</h1>
+<app-busqueda-empleado-modal (onFinish)="setNombreEmpleado($event);"></app-busqueda-empleado-modal>
+
+<form action="" [formGroup]="polizaForm" (ngSubmit)="save();">
+    <div class="mb-3 row">
+        <div class="col-lg-9 col-sm-auto">
+            <div class="row">
+                <div class="col-lg-1 col-sm-auto col-md-auto">
+                    <label for="empleado" class="form-label">Empleado: {{polizaForm.controls.idEmpleado.value}}</label>
+                </div>
+                <div class="col-lg-2 col-sm-auto col-md-auto">
+                    <input type="hidden" class="form-control" formControlName="idEmpleado" />
+                    <input type="text" [disabled]="true" [readOnly]="true" class="form-control form-control-sm" formControlName="empleadoGenero" />
+                </div>
+                <div class="col-lg-7 col-sm-auto col-md-auto">
+                    <div class="row">
+                        <div class="col-lg-4"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Buscar empleado</button></div>
+                        <div class="col-lg-3">
+                            <a *ngIf="polizaForm.controls.idEmpleado.value != '0'" class="btn btn-primary btn-sm" [routerLink]="['/listapoliza'
+                            , polizaForm.controls.idEmpleado.value, polizaForm.controls.empleadoGenero.value]">Ver pólizas</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-auto col-md-auto">
+            <div class="col-lg-6 d-inline"><label for="" class="form-label"><b>Poliza Id:</b> <span #polizaId>{{generatedId}}</span></label></div>
+            &nbsp;&nbsp;<div class="col-lg-6 d-inline"><b>Fecha:</b> <span #fechaPoliza>{{fechaActual}}</span></div>
+        </div>
+    </div>
+
+<!--Formulario de captura-->
+<div class='card mt-5' *ngIf="polizaForm.controls.idEmpleado.value != '0'">
+    <div class='card-header'>
+        <div class="row">
+            <div class="col-md-3"><span style="font-size: 1.5em;">Crear poliza</span></div>
+            <div class="col-md-4">
+                <input class="btn btn-primary btn-sm" type="button" value="+ sku" (click)="addSkuLine()">&nbsp;
+                <input class="btn btn-primary btn-sm" type="submit" value="Generar Poliza"
+                [disabled]="!polizaForm.valid || skus.controls.length <= 0" >
+            </div>
+        </div>
+    </div>
+
+    <div class='card-body'>
+        <div class="row">
+            <div class="col-md-2">SKU</div>
+            <div class="col-md-3">Descripción</div>
+            <div class="col-md-2">Cantidad</div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+            <div formArrayName="detalle" *ngFor="let fa of skus.controls; let i=index">
+                <div [formGroupName]="i" class="form-group row mb-2">
+                    <div class="col-md-2">
+                        <input id="{{ 'sku' + i }}" maxlength="6" formControlName="sku" class="form-control" />
+                        <span class="error" *ngIf="fa.get('sku')?.invalid && (fa.get('sku')?.dirty || fa.get('sku')?.touched)">
+                            Capture el sku.
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <input id="{{ 'nombre' + i }}" maxlength="100" #txtNombre type="text" name="nombre" class="form-control" required/>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="{{'cantidad' + i }}" type="number" formControlName="cantidad" class="form-control"/>
+                        <span class="error" *ngIf="fa.get('cantidad')?.invalid && (fa.get('cantidad')?.dirty || fa.get('cantidad')?.touched)">
+                            Capture la cantidad.
+                        </span>
+                        </div>
+                    <div class="col-md-2">
+                        <input type="button" value="Quitar" (click)="removeSkuLine(i);" class="btn btn-danger btn-sm"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--//formulario de captura-->
+</form>
+
+
