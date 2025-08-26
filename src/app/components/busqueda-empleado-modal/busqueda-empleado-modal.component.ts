@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Empleado } from 'src/app/model/empleado';
-import { EmpleadoListResponse } from 'src/app/responses/empleado-list-response';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 
 @Component({
@@ -10,30 +9,30 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
   styleUrls: ['./busqueda-empleado-modal.component.css']
 })
 export class BusquedaEmpleadoModalComponent {
-  nombreABuscar='';
-  @Output() onFinish:EventEmitter<Empleado> = new EventEmitter<Empleado>();
-  empleados?:EmpleadoListResponse;
-  empleadosFiltered:Empleado[]=[];
+  nombreABuscar = '';
+  @Output() onFinish: EventEmitter<Empleado> = new EventEmitter<Empleado>();
+  empleados?: any;
+  empleadosFiltered: Empleado[] = [];
 
-  constructor(private empleadoService:EmpleadoService){
+  constructor(private empleadoService: EmpleadoService) {
   }
 
-  getEmpleados(){
-    this.empleadoService.all().subscribe(empleadoResponse=>{
+  getEmpleados() {
+    this.empleadoService.all().subscribe(empleadoResponse => {
       this.empleados = empleadoResponse;
       //console.log(`Empleados Recuperados ${JSON.stringify(this.empleados)}`);
     });
   }
 
-  onClosing(forma:NgForm): void {
-    this.empleados=undefined;
-    this.nombreABuscar='';
+  onClosing(forma: NgForm): void {
+    this.empleados = undefined;
+    this.nombreABuscar = '';
     forma.resetForm();
   }
 
-  searchEmpleado():void{
+  searchEmpleado(): void {
     //this.empleados = [];
-    const findThis=this.nombreABuscar.trim();
+    const findThis = this.nombreABuscar.trim();
     this.empleadoService.byName(findThis).subscribe(emp => {
       this.empleados = emp;
       //console.log(`Empleados recuperados: ${JSON.stringify(emp)}`);
@@ -48,8 +47,8 @@ export class BusquedaEmpleadoModalComponent {
       //console.log(`Empleados recuperados: ${JSON.stringify(emp)}`);
     });
   }*/
-  
-  selectEmpleado(empleado:any):void{
+
+  selectEmpleado(empleado: any): void {
     this.onFinish.emit(empleado);
   }
 

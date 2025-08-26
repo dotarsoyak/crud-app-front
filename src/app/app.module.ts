@@ -15,13 +15,13 @@ import { BusquedaEmpleadoModalComponent } from './components/busqueda-empleado-m
 import { PolizaListadoComponent } from './components/poliza-listado/poliza-listado.component';
 
 const routes: Routes = [
-  {path:'home', component: HomeComponent},
-  {path:'poliza', component: PolizaFaltanteFormComponent},
-  {path:'empleado', component: EmpleadoCreateComponent},
-  {path:'listapoliza/:id/:name', component: PolizaListadoComponent},
-  {path:'busquedaemp', component: BusquedaEmpleadoModalComponent},
-  {path:'', redirectTo:'home', pathMatch:'full'},
-  {path:'**', component: PageNotFoundComponent}
+  { path: 'home', component: HomeComponent },
+  { path: 'poliza', component: PolizaFaltanteFormComponent },
+  { path: 'empleado', component: EmpleadoCreateComponent },
+  { path: 'listapoliza/:id/:name', component: PolizaListadoComponent },
+  { path: 'busquedaemp', component: BusquedaEmpleadoModalComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,14 @@
+{
+  "Meta": {
+    "Status": "Ok"
+  },
+  "Data": {
+    "Empleado": [
+      {
+        "idEmpleado": "1",
+        "nombre": "John",
+        "apellido": "Doe"
+      }
+    ]
+  }
+}

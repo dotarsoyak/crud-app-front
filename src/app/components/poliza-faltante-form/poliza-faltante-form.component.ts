@@ -14,58 +14,58 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./poliza-faltante-form.component.css']
 })
 export class PolizaFaltanteFormComponent {
-  nombreEmpleado='';
-  selectedEmpleado!:Empleado;
-  generatedId="";
-  fechaActual=new Date().toLocaleDateString();
+  nombreEmpleado = '';
+  selectedEmpleado!: Empleado;
+  generatedId = "";
+  fechaActual = new Date().toLocaleDateString();
 
-  setNombreEmpleado(empleado:Empleado):void{
+  setNombreEmpleado(empleado: Empleado): void {
     this.selectedEmpleado = empleado;
     this.actualizarPoliza();
   }
 
-  constructor(private fb: FormBuilder, private polizaService:PolizaService,
-    private snackBar: MatSnackBar){
-      //localStorage.setItem("authToken", "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAxMzQwMDI2LCJleHAiOjE3MDEzNDM2MjZ9.OpTHFn7z5v0h140UH7S-lNBJS2XVx0GmpgH0nkwaNt8");
-    }
+  constructor(private fb: FormBuilder, private polizaService: PolizaService,
+    private snackBar: MatSnackBar) {
+    //localStorage.setItem("authToken", "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAxMzQwMDI2LCJleHAiOjE3MDEzNDM2MjZ9.OpTHFn7z5v0h140UH7S-lNBJS2XVx0GmpgH0nkwaNt8");
+  }
 
-  get skus():FormArray{
+  get skus(): FormArray {
     return <FormArray>this.polizaForm.get('detalle');
   }
-  
+
   polizaForm = this.fb.group({
     idEmpleado: ['0'],
     empleadoGenero: [''],
     detalle: this.fb.array([this.buildSkuGroup()])
   });
 
-  addSkuLine():void{
+  addSkuLine(): void {
     this.skus.push(this.buildSkuGroup());
-    if(this.filtrarPorSkuDuplicados()>0){
-      this.openSnackBar(`La póliza no debe contener códigos duplicados.`,'Cerrar');
+    if (this.filtrarPorSkuDuplicados() > 0) {
+      this.openSnackBar(`La póliza no debe contener códigos duplicados.`, 'Cerrar');
       return;
     }
   }
 
-  removeSkuLine(skuId:number):void{
+  removeSkuLine(skuId: number): void {
     this.skus.removeAt(skuId);
   }
 
-  buildSkuGroup():FormGroup{
+  buildSkuGroup(): FormGroup {
     return this.fb.group({
-      sku:['',[Validators.required, Validators.maxLength(6), Validators.pattern("[0-9]+")]],
+      sku: ['', [Validators.required, Validators.maxLength(6), Validators.pattern("[0-9]+")]],
       cantidad: [0, [Validators.min(1), Validators.required]]
     });
   }
 
-  filtrarPorSkuDuplicados():number{
+  filtrarPorSkuDuplicados(): number {
     let skuArray = this.polizaForm.controls.detalle.controls;
     let duplicados = 0;
 
-    for(let i=0; i<skuArray.length;i++){
-      for(let j=i+1; j<skuArray.length;j++){
+    for (let i = 0; i < skuArray.length; i++) {
+      for (let j = i + 1; j < skuArray.length; j++) {
         //console.log(`${skuArray[i].controls['sku'].value} - ${skuArray[j].controls['sku'].value}`);
-        if(skuArray[i].controls['sku'].value == skuArray[j].controls['sku'].value){
+        if (skuArray[i].controls['sku'].value == skuArray[j].controls['sku'].value) {
           duplicados = 1;
           break;
         }
@@ -75,44 +75,44 @@ export class PolizaFaltanteFormComponent {
     return duplicados;
   }
 
-  save():void{
-    if(this.filtrarPorSkuDuplicados()>0){
-      this.openSnackBar(`La póliza no debe contener códigos duplicados.`,'Cerrar');
+  save(): void {
+    if (this.filtrarPorSkuDuplicados() > 0) {
+      this.openSnackBar(`La póliza no debe contener códigos duplicados.`, 'Cerrar');
       return;
     }
 
-    if(this.polizaForm.valid){
-      let polizaRequest:PolizaRequest={
-        idEmpleado:this.polizaForm.value.idEmpleado?this.polizaForm.value.idEmpleado:'',
-        empleadoGenero:this.polizaForm.value.empleadoGenero?this.polizaForm.value.empleadoGenero:'',
-        detalle: this.polizaForm.value.detalle?this.polizaForm.value.detalle:[]
+    if (this.polizaForm.valid) {
+      let polizaRequest: PolizaRequest = {
+        idEmpleado: this.polizaForm.value.idEmpleado ? this.polizaForm.value.idEmpleado : '',
+        empleadoGenero: this.polizaForm.value.empleadoGenero ? this.polizaForm.value.empleadoGenero : '',
+        detalle: this.polizaForm.value.detalle ? this.polizaForm.value.detalle : []
       };
-  
-      this.polizaService.add(polizaRequest).subscribe((response:any) => {
-        let res:GrabadoResponse = response;
-        this.generatedId=res.Data.Poliza.idPoliza;
-        this.openSnackBar(`Se generó con éxito la póliza ${this.generatedId}`,'Cerrar');
+
+      this.polizaService.add(polizaRequest).subscribe((response: any) => {
+        let res: GrabadoResponse = response;
+        this.generatedId = res.Data.Poliza.idPoliza;
+        this.openSnackBar(`Se generó con éxito la póliza ${this.generatedId}`, 'Cerrar');
         //console.log(`Poliza response: ${JSON.stringify(res)}`);
       },
-      error => {
-        this.openSnackBar(`Ocurrió un error al intentar grabar la póliza.`,'Cerrar');
-        catchError(this.handleError);
-      });
-    }else{
+        error => {
+          this.openSnackBar(`Ocurrió un error al intentar grabar la póliza.`, 'Cerrar');
+          catchError(this.handleError);
+        });
+    } else {
       //TODO: levantar alert indicando que no se puede grabar.
     }
   }
 
-  handleError(err: HttpErrorResponse){
+  handleError(err: HttpErrorResponse) {
     let errorMessage = '';
-    if(err.error instanceof ErrorEvent){
+    if (err.error instanceof ErrorEvent) {
       errorMessage = `An error ocurred: ${err.error.message}`;
-    }else{
+    } else {
       errorMessage = `Server returned code: ${err.status},  error message is: ${err.message}`;
     }
 
     console.error(errorMessage);
-    return  throwError(()=>errorMessage);
+    return throwError(() => errorMessage);
   }
 
   actualizarPoliza() {
@@ -122,9 +122,9 @@ export class PolizaFaltanteFormComponent {
     });
   }
 
-  openSnackBar(message: string, action: string){
+  openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration:2500,  
+      duration: 2500,
     });
   }
 
