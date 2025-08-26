@@ -9,32 +9,30 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
   styleUrls: ['./empleado-create-form.component.css']
 })
 export class EmpleadoCreateComponent {
-  empleado:Empleado={
-    idEmpleado:"0",
-    nombre:"",
-    apellido:"",
-    puesto:""
+  empleado: Empleado = {
+    idEmpleado: "0",
+    nombre: "",
+    apellido: "",
+    puesto: ""
   };
 
   constructor(
-    private empleadoService:EmpleadoService,
-    private snackBar: MatSnackBar){
+    private empleadoService: EmpleadoService,
+    private snackBar: MatSnackBar) {
 
-    }
+  }
 
-  submit(data:any){
-    //console.log(`Creando empleado: ${data.nombre}`);
+  submit(data: any) {
     this.empleadoService.save(data).subscribe(
       data => {
-        //console.log(`Respuesta: ${JSON.stringify(data)}`)
-        this.openSnackBar('Empleado guardado','Cerrar');
+        this.openSnackBar('Empleado guardado', 'Cerrar');
       }
     );
   }
 
-  openSnackBar(message: string, action: string){
+  openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration:2000,  
+      duration: 2000,
     });
   }
 

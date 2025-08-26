@@ -26,7 +26,6 @@ export class PolizaFaltanteFormComponent {
 
   constructor(private fb: FormBuilder, private polizaService: PolizaService,
     private snackBar: MatSnackBar) {
-    //localStorage.setItem("authToken", "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzAxMzQwMDI2LCJleHAiOjE3MDEzNDM2MjZ9.OpTHFn7z5v0h140UH7S-lNBJS2XVx0GmpgH0nkwaNt8");
   }
 
   get skus(): FormArray {
@@ -64,7 +63,6 @@ export class PolizaFaltanteFormComponent {
 
     for (let i = 0; i < skuArray.length; i++) {
       for (let j = i + 1; j < skuArray.length; j++) {
-        //console.log(`${skuArray[i].controls['sku'].value} - ${skuArray[j].controls['sku'].value}`);
         if (skuArray[i].controls['sku'].value == skuArray[j].controls['sku'].value) {
           duplicados = 1;
           break;
@@ -92,14 +90,11 @@ export class PolizaFaltanteFormComponent {
         let res: GrabadoResponse = response;
         this.generatedId = res.Data.Poliza.idPoliza;
         this.openSnackBar(`Se generó con éxito la póliza ${this.generatedId}`, 'Cerrar');
-        //console.log(`Poliza response: ${JSON.stringify(res)}`);
       },
         error => {
           this.openSnackBar(`Ocurrió un error al intentar grabar la póliza.`, 'Cerrar');
           catchError(this.handleError);
         });
-    } else {
-      //TODO: levantar alert indicando que no se puede grabar.
     }
   }
 

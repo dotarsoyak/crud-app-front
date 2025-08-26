@@ -5,12 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { PolizaEmpleado } from 'src/app/model/poliza-empleado';
 import { ActivatedRoute } from '@angular/router';
-
-export interface PolizaStruct {
-  idPoliza: string;
-  cantidad: string;
-  fecha: string;
-}
+import { MatDialog } from '@angular/material/dialog';
+import { PolizaRemoveDialog } from '../dialogs/poliza-remove-dialog.component';
+import { PolizaDetalleDialogComponent } from '../dialogs/policies/poliza-detalle-dialog.component';
 
 @Component({
   selector: 'app-poliza-listado',
@@ -18,20 +15,41 @@ export interface PolizaStruct {
   styleUrls: ['./poliza-listado.component.css']
 })
 export class PolizaListadoComponent implements OnInit {
-  selectedEmpleado?:string;
-  empleadoId:string="";
-  //polizas:any; 
+  selectedEmpleado?: string;
+  empleadoId: string = "";
   polizas: Observable<PolizaEmpleado[]> | undefined;
   displayedColumns: string[] = ['idPoliza', 'cantidad', 'fecha', 'accion'];
-  dataSource!:MatTableDataSource<PolizaEmpleado>;  
+  dataSource!: MatTableDataSource<PolizaEmpleado>;
 
-   constructor(private polizaService:PolizaService,private route: ActivatedRoute){
-    //this.obtenerPolizas();
-   }
+  constructor(private polizaService: PolizaService, private route: ActivatedRoute,
+    public dialog: MatDialog
+  ) { }
 
-   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, idPoliza: string): void {
+    const dialogRef = this.dialog.open(PolizaRemoveDialog, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        idPoliza: idPoliza,
+        empleadoId: this.empleadoId
+      }
+    });
 
-   ngOnInit(): void {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Policy deleted successfully');
+      }
+    });
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     this.empleadoId = routeParams.get("id") || '0';
     this.selectedEmpleado = routeParams.get("name") || '';
@@ -44,14 +62,16 @@ export class PolizaListadoComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       }
     })
-   }
+  }
 
-   obtenerPolizas(){
-    this.polizaService.obtenerPorEmpleado("1").subscribe(
-      (lista:any)=>{
-        this.polizas = lista;
-        //console.log(`Polizas recuperadas: ${JSON.stringify(lista)}`);
+  openDetalleDialog(idPoliza: string): void {
+    this.dialog.open(PolizaDetalleDialogComponent, {
+      width: '500px',
+      data: {
+        idPoliza: idPoliza,
+        empleadoId: this.empleadoId
       }
-    );
-   }
+    });
+  }
+
 }

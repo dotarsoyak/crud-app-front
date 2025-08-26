@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Detalle de Póliza {{data.idPoliza}}</h2>
+<mat-dialog-content>
+  <div *ngIf="detalleArticulos && detalleArticulos.length > 0; else noData">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of detalleArticulos">
+          <td>{{ item.sku }}</td>
+          <td>{{ item.cantidad }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noData>
+    <p>No hay detalles para esta póliza.</p>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="close()">Cerrar</button>
+</mat-dialog-actions>

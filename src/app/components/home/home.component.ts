@@ -15,42 +15,18 @@ import { GenericResponse } from 'src/app/responses/generic-response';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  constructor(private polizaService:PolizaService){
-        /*let metaStatus:MetaStatusModel = {Status:'OK'};
-        let polizaModel: PolizaModelResponse = {
-          cantidad:"1",
-          idPoliza:"1"
-        }
-        let _data:DataModelResponse={
-          Poliza:polizaModel,
-          Empleado: {nombre:"Ulises", apellido:"Trujillo"},
-          DetalleArticulo: [{nombre:"Bici", sku:"101285"}, {nombre:"Trapeador", sku:"151286"}]
-        };
+  constructor(private polizaService: PolizaService) { }
 
-        let response:GrabadoResponse = {
-          Meta:metaStatus,
-          Data:_data
-        }*/
-
-
-        /*let genericResponse:GenericResponse = {
-            Data:{Mensaje:"Todo OK"},
-            Meta:{Status:"OK"}
-        }
-          //(`Poliza response: ${JSON.stringify(genericResponse)}`);*/
-
-    }
-  
-  getPolizaRequest():any{
-    let detalleRequest:PolizaDetalleRequest[]=[{
-      sku:"101285",
-      cantidad:"2"
-    },{
-      sku:"224195",
-      cantidad:"3"
+  getPolizaRequest(): any {
+    let detalleRequest: PolizaDetalleRequest[] = [{
+      sku: "101285",
+      cantidad: "2"
+    }, {
+      sku: "224195",
+      cantidad: "3"
     }];
 
-    let polizaRequest:PolizaRequest = {
+    let polizaRequest: PolizaRequest = {
       idEmpleado: "1",
       empleadoGenero: "Ulises Trujillo",
       detalle: detalleRequest
@@ -59,10 +35,9 @@ export class HomeComponent {
     return polizaRequest;
   }
 
-  addPoliza():void{
+  addPoliza(): void {
     let request = this.getPolizaRequest();
-    this.polizaService.add(request).subscribe((response:any) => {
-      //console.log(`Poliza response: ${JSON.stringify(response)}`);
+    this.polizaService.add(request).subscribe((response: any) => {
     });
 
   }

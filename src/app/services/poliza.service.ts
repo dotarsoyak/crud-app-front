@@ -3,18 +3,13 @@ import { BehaviorSubject, Observable, catchError, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { PolizaRequest } from '../model/poliza-request';
 import { PolizaEmpleado } from '../model/poliza-empleado';
-import { EmpleadoPolizasResponse } from '../responses/empleado-polizas-response';
 import { TokenResponse } from '../responses/token-response';
 import { authUrl } from 'src/config';
-import { GrabadoResponse } from '../responses/grabado-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PolizaService {
-  url = "http://localhost:4200/rest/api/v1/poliza";
-  authToken = "";
-  tokenUrl: string = authUrl;
   private readonly POLICIES = "policies";
 
   private dataStore: {
@@ -27,10 +22,6 @@ export class PolizaService {
 
   constructor(private http: HttpClient) {
     this._polizas = new BehaviorSubject<PolizaEmpleado[]>([]);
-  }
-
-  getToken(): Observable<TokenResponse> {
-    return this.http.post<TokenResponse>(`${this.tokenUrl}?user=client&password=123`, "");
   }
 
   get polizas(): Observable<PolizaEmpleado[]> {
@@ -55,17 +46,6 @@ export class PolizaService {
     }
 
     return throwError(() => errorMessage);
-  }
-
-  obtenerPorEmpleado(idEmpleado: string): Observable<any> {
-    return this.http.get<PolizaRequest>(`${this.url}/empleado/${idEmpleado}`,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json; charset=utf-8',
-          'Authorization': `Bearer ${localStorage.getItem("authToken")}`,
-          "Accept": "application/json"
-        })
-      });
   }
 
   add(request: PolizaRequest): Observable<any> {
@@ -95,14 +75,32 @@ export class PolizaService {
     jsonPolicies.push(response);
     localStorage.setItem(this.POLICIES, JSON.stringify(jsonPolicies));
 
+    this.dataStore.polizas = response.Data.Poliza;
+    this._polizas.next(Object.assign({}, this.dataStore).polizas);
+
     return of(response);
   }
 
-  getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8',
-      'Authorization': `Bearer ${this.authToken}`,
-      "Accept": "application/json"
+  delete(idPoliza: string): Observable<any> {
+    const jsonPolicies = JSON.parse(localStorage.getItem(this.POLICIES) || '[]');
+    const filteredPolicies = jsonPolicies.filter((item: any) =>
+      item.Data.Poliza.idPoliza !== idPoliza
+    );
+
+    localStorage.setItem(this.POLICIES, JSON.stringify(filteredPolicies));
+
+    this.dataStore.polizas = this.dataStore.polizas.filter(poliza =>
+      poliza.idPoliza !== idPoliza
+    );
+    this._polizas.next(Object.assign({}, this.dataStore).polizas);
+
+    return of({
+      Meta: {
+        Status: "SUCCESS"
+      },
+      Data: {
+        Poliza: { idPoliza }
+      }
     });
   }
 

@@ -38,15 +38,9 @@ export class EmpleadoService {
   getToken(): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(`${this.tokenUrl}?user=client&password=123`,
       "");
-    //console.log(`Empleado fue creado exitosamente. ${JSON.stringify(data)}`);
   }
 
   save(newEmpleado: Empleado): Observable<any> {
-    // return this.http.post<any>(`${this.url}/add`, newEmpleado,
-    //   {
-    //     headers: this.getHeaders()
-    //   });
-
     let employees = JSON.parse(localStorage.getItem(EMPLEADOS) || "[]");
 
     newEmpleado.idEmpleado = (Math.ceil(Math.random() * 100) + 1).toString();
@@ -54,35 +48,13 @@ export class EmpleadoService {
     this.prepareLocalStorage(employees);
 
     return of(employees)
-
   }
 
   all(): Observable<any> {
     return of(JSON.parse(localStorage.getItem(EMPLEADOS) || "{}"));
   }
 
-  /*getByname(name:string):Observable<Empleado[]>{
-    return of(MockEmpleados);
-  }*/
-
   byName(name: string): Observable<EmpleadoListResponse | []> {
-    //return this.http.get<any>(`${this.url}/byName/${name}`,
-    // return this.http.get<EmpleadoListResponse>(`${this.url}`,
-    //   {
-    //     headers: this.getHeaders()
-    //   })
-    //   .pipe(
-    //     map((res: any) => {
-    //       for (let emp of res[0].Data.Empleado) {
-    //         if (emp.nombre.toLowerCase() == name.toLowerCase()) {
-    //           return res[0]
-    //         }
-    //       }
-
-    //       return [];
-    //     })
-    //   );
-
     const employeeDataSource = JSON.parse(localStorage.getItem(EMPLEADOS) || "[]");
     const employees = [{
       Data: {
@@ -99,14 +71,6 @@ export class EmpleadoService {
           res[0].Data.Empleado = result;
 
           return res[0];
-
-          // for (let emp of res[0].Data.Empleado) {
-          //   if (emp.nombre.toLowerCase() == name.toLowerCase()) {
-          //     return res[0]
-          //   }
-          // }
-
-          //return [];
         })
       )
   }

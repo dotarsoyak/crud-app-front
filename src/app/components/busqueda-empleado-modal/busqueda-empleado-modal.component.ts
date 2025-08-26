@@ -20,7 +20,6 @@ export class BusquedaEmpleadoModalComponent {
   getEmpleados() {
     this.empleadoService.all().subscribe(empleadoResponse => {
       this.empleados = empleadoResponse;
-      //console.log(`Empleados Recuperados ${JSON.stringify(this.empleados)}`);
     });
   }
 
@@ -31,22 +30,11 @@ export class BusquedaEmpleadoModalComponent {
   }
 
   searchEmpleado(): void {
-    //this.empleados = [];
     const findThis = this.nombreABuscar.trim();
     this.empleadoService.byName(findThis).subscribe(emp => {
       this.empleados = emp;
-      //console.log(`Empleados recuperados: ${JSON.stringify(emp)}`);
     });
   }
-
-  /*searchEmpleado():void{
-    //this.empleados = [];
-    const findThis=this.nombreABuscar.trim();
-    this.empleadoService.getByname(findThis).subscribe(emp => {
-      //this.empleados = emp;
-      //console.log(`Empleados recuperados: ${JSON.stringify(emp)}`);
-    });
-  }*/
 
   selectEmpleado(empleado: any): void {
     this.onFinish.emit(empleado);
