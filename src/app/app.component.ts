@@ -10,17 +10,17 @@ import { authUrl } from 'src/config';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'crud Coppel';
-  tokenUrl:string=authUrl;
+  title = 'Gestor de polizas';
+  tokenUrl: string = authUrl;
 
-  constructor(private http: HttpClient){
-    this.getToken().subscribe((response:TokenResponse) => {
-      localStorage.setItem("authToken",response.token.substring(7));
+  constructor(private http: HttpClient) {
+    this.getToken().subscribe((response: TokenResponse) => {
+      localStorage.setItem("authToken", response.token.substring(7));
     });
   }
 
-  getToken():Observable<TokenResponse>{
-    return this.http.post<TokenResponse>(`${this.tokenUrl}?user=client&password=123`, 
-    "");
+  getToken(): Observable<TokenResponse> {
+    return this.http.post<TokenResponse>(`${this.tokenUrl}?user=client&password=123`,
+      "");
   }
 }
