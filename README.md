@@ -1,47 +1,108 @@
-# Crud
+# CRUD App Front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+## Overview
 
-## Development server
+This project is an Angular-based front-end application designed to manage employee insurance policies. It provides a user-friendly interface for creating, listing, viewing, and deleting insurance policies associated with employees. The application simulates backend operations using the browser's localStorage, making it easy to test and demonstrate CRUD (Create, Read, Update, Delete) operations without a real backend.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Approach
 
-## Code scaffolding
+- **Component-Based Architecture:**  
+  The application is structured using Angular components for modularity and maintainability. Each feature (such as listing policies, creating a new policy, and viewing policy details) is encapsulated in its own component.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **LocalStorage as Data Source:**  
+  Instead of connecting to a backend API, the app uses the browser's localStorage to persist and retrieve data. This allows for rapid prototyping and easy testing without server dependencies.
 
-## Build
+- **Material Design:**  
+  Angular Material components are used for dialogs, tables, buttons, and forms, providing a modern and responsive user interface.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Dialog-Driven Actions:**  
+  Actions like deleting a policy or viewing policy details are handled through modal dialogs, improving user experience and keeping the UI clean.
 
-## Running unit tests
+- **TypeScript Interfaces:**  
+  The data models (such as `PolizaModelResponse`, `EmpleadoModelResponse`, and `DetalleArticuloModelResponse`) are strictly typed using TypeScript interfaces, ensuring type safety and clarity throughout the codebase.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Features
 
-## Running end-to-end tests
+- **Employee Policy Management:**  
+  - List all policies for a selected employee.
+  - Create new policies with detailed items (SKU, quantity).
+  - View detailed information for each policy.
+  - Delete policies with confirmation dialogs.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **Reusable Services:**  
+  Angular services handle all data operations, abstracting the logic for interacting with localStorage and providing observables for reactive UI updates.
 
-## Further help
+- **Routing and Navigation:**  
+  The app uses Angular's routing to navigate between different views and components.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Usage
 
-##INSTRUCCIONES
+1. **Install dependencies:**  
+   Run `npm install` to install all required packages.
 
-Se creó la configuración proxy.conf.json para resolver el tema de cors
-en la propiedad target se asigna el valor del servidor puerto para consumir
-el api rest.
+2. **Run the application:**  
+   Use `ng serve` to start the development server.  
+   Open your browser at `http://localhost:4200`.
 
-##proxy.conf.json 
-{
-    "/rest/*": {
-      "target": "http://localhost:8080",
-      "secure": false,
-      "pathRewrite": {
-        "^/rest": ""
-      },
-      "logLevel": "debug"
-    }
-}
+3. **Interact with the UI:**  
+   - Add, view, and delete employee policies.
+   - All changes are stored in your browser's localStorage.
 
+## Purpose
 
+This project serves as a demonstration of Angular best practices for CRUD operations, component communication, and state management using localStorage. It is ideal for learning, prototyping, or as a foundation for more complex applications that may later integrate with real backend APIs.
+
+---
+```# CRUD App Front
+
+## Overview
+
+This project is an Angular-based front-end application designed to manage employee insurance policies. It provides a user-friendly interface for creating, listing, viewing, and deleting insurance policies associated with employees. The application simulates backend operations using the browser's localStorage, making it easy to test and demonstrate CRUD (Create, Read, Update, Delete) operations without a real backend.
+
+## Approach
+
+- **Component-Based Architecture:**  
+  The application is structured using Angular components for modularity and maintainability. Each feature (such as listing policies, creating a new policy, and viewing policy details) is encapsulated in its own component.
+
+- **LocalStorage as Data Source:**  
+  Instead of connecting to a backend API, the app uses the browser's localStorage to persist and retrieve data. This allows for rapid prototyping and easy testing without server dependencies.
+
+- **Material Design:**  
+  Angular Material components are used for dialogs, tables, buttons, and forms, providing a modern and responsive user interface.
+
+- **Dialog-Driven Actions:**  
+  Actions like deleting a policy or viewing policy details are handled through modal dialogs, improving user experience and keeping the UI clean.
+
+- **TypeScript Interfaces:**  
+  The data models (such as `PolizaModelResponse`, `EmpleadoModelResponse`, and `DetalleArticuloModelResponse`) are strictly typed using TypeScript interfaces, ensuring type safety and clarity throughout the codebase.
+
+## Features
+
+- **Employee Policy Management:**  
+  - List all policies for a selected employee.
+  - Create new policies with detailed items (SKU, quantity).
+  - View detailed information for each policy.
+  - Delete policies with confirmation dialogs.
+
+- **Reusable Services:**  
+  Angular services handle all data operations, abstracting the logic for interacting with localStorage and providing observables for reactive UI updates.
+
+- **Routing and Navigation:**  
+  The app uses Angular's routing to navigate between different views and components.
+
+## Usage
+
+1. **Install dependencies:**  
+   Run `npm install` to install all required packages.
+
+2. **Run the application:**  
+   Use `ng serve` to start the development server.  
+   Open your browser at `http://localhost:4200`.
+
+3. **Interact with the UI:**  
+   - Add, view, and delete employee policies.
+   - All changes are stored in your browser's localStorage.
+
+## Purpose
+
+This project serves as a demonstration of Angular best practices for CRUD operations, component communication, and state management using localStorage. It is ideal for learning, prototyping, or as a foundation for more complex applications that may later integrate with real backend APIs.
