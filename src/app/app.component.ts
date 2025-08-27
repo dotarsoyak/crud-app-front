@@ -10,7 +10,7 @@ import { authUrl } from 'src/config';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'crud Coppel';
+  title = 'Gestor de polizas';
   tokenUrl: string = authUrl;
 
   constructor(private http: HttpClient) { }
