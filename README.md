@@ -1,4 +1,15 @@
-# CRUD App Front
+<div align="center">
+  <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" width="100"/>
+  <h1 style="color:#dd0031; font-family:Arial, sans-serif; margin-top: 0.5em;">
+  </h1>
+  <p>
+    <a target="_blank" href="https://dotarsoyak.github.io/crud-app-front/home"><img src="https://img.shields.io/badge/CRUD-Homepage-blue?style=flat-square" alt="Homepage"/></a>
+    <a target="_blank" href="https://developer.mozilla.org/es/docs/Web/API/Window/localStorage"><img src="https://img.shields.io/badge/LocalStorage-Enabled-green?style=flat-square" alt="LocalStorage"/></a>
+    <a target="_blank" href="https://v16.angular.io/docs"><img alt="Angular-16" src="https://img.shields.io/badge/Angular-Framework-dd0031?style=flat-square&logo=angular&logoColor=white"/></a>
+  </p>
+</div>
+
+# CRUD App Front 
 
 ## Overview
 
